@@ -17,14 +17,25 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('auth/google', [LoginWithGoogleController::class, 'redirectToGoogle']);
-Route::get('auth/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
+// //login with google
+// Route::get('auth/google', [LoginWithGoogleController::class, 'redirectToGoogle']);
+// Route::get('auth/callback', [LoginWithGoogleController::class, 'handleGoogleCallback']);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
+// //login with facebook
+// Route::get('auth/facebook', [LoginWithGoogleController::class, 'redirectToFacebook']);
+// Route::get('auth/facebook/callback', [LoginWithGoogleController::class, 'handleFacebookCallback']);
+
+// //login with twitter
+// Route::get('auth/twitter/callback', [LoginWithGoogleController::class, 'TwitterCallback']);
+
+
+//optimize route and way
+Route::controller(LoginWithGoogleController::class)->prefix('auth')->group(function (){
+    Route::get('{provider}', 'redirect');
+    Route::get('{provider}/callback', 'Callback');
+});
+
+Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
