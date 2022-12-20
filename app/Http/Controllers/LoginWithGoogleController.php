@@ -23,8 +23,7 @@ class LoginWithGoogleController extends Controller
         try {
 
             $user = Socialite::driver($provider)->user();
-
-            $finduser = User::where('provider_id', $user->id)->first();
+            $finduser = User::where('provider_id', $user->id)->orwhere('email',$user->email)->first();
 
             if ($finduser) {
 
@@ -69,6 +68,13 @@ class LoginWithGoogleController extends Controller
             ]);
             return redirect()->route('home');
         }
+    }
+
+    public function test(){
+        //we  can not get user details using thare provider_id
+        // $user = Socialite::driver('google')->userFromToken('105274305770744157095');
+        // $user = Socialite::driver('google')->userFromTokenAndSecret('105274305770744157095');
+        // dd($user);
     }
    
 }

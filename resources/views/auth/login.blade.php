@@ -59,13 +59,13 @@
                 </a>
             </div>
             <div class="flex items-center mt-4 pl-1">
-                <a href="{{ url('/login/twitter') }}"> 
+                <a href="{{ url('auth/twitter') }}"> 
                 <img src="https://cdn.cms-twdigitalassets.com/content/dam/developer-twitter/auth-docs/sign-in-with-twitter-gray.png.twimg.1920.png"
                      >
                 </a>
             </div>
             <div class="flex items-center mt-4">
-                <a href="{{ url('/login/github') }}"> 
+                <a href="{{ url('auth/github') }}"> 
                 <img src="https://coderwall-assets-0.s3.amazonaws.com/uploads/picture/file/4363/github.png">
                 </a>
             </div>

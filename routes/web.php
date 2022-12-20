@@ -27,6 +27,7 @@ Route::get('/', function () {
 
 // //login with twitter
 // Route::get('auth/twitter/callback', [LoginWithGoogleController::class, 'TwitterCallback']);
+Route::get('test', [LoginWithGoogleController::class, 'test']);
 
 
 //optimize route and way
