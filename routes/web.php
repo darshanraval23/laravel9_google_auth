@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginWithGoogleController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,6 +38,23 @@ Route::get('test', [LoginWithGoogleController::class, 'test']);
 Route::controller(LoginWithGoogleController::class)->prefix('auth')->group(function (){
     Route::get('{provider}', 'redirect');
     Route::get('{provider}/callback', 'Callback');
+});
+
+//impersont route 
+route::get('/swich/{id}', function($id){
+    // dd($id);
+    //loginas
+        Session::put('impersonate',$id);
+
+    //back to admin 
+        // Auth()->user()->stopImpersonating();
+    return redirect()->route('dashboard1'); 
+});
+Route::middleware(['auth:web','impersont'])->group(function(){
+    Route::get('/dashboard1', function () {
+        dump(auth()->user()->id, auth()->user()->name);
+        dump(Auth()->user()->isImpersonating());
+    })->name('dashboard1');
 });
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified'])->group(function () {

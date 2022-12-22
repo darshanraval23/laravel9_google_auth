@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasTeams;
+use Illuminate\Support\Facades\Session;
 
 class User extends Authenticatable
 {
@@ -65,4 +66,21 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function setImpersonating($id)
+    {
+        Session::put('impersonate', $id);
+    }
+
+    public function stopImpersonating()
+    {
+        Session::forget('impersonate');
+
+    }
+
+    public function isImpersonating()
+    {
+        return Session::has('impersonate');
+    }
+
 }

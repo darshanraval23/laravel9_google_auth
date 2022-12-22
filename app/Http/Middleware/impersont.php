@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class impersont
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
+     * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        // if ($request->attributes->get('sanctum') !== true) {
+        //     // not a sanctum request
+        //     return $next($request);
+        // }
+
+        if($request->session()->has('impersonate')){
+            Auth::onceUsingId($request->session()->get('impersonate'));
+        }
+        return $next($request);
+    }
+}
